@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.gliesereum.coupler_business"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "0.0.1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig getSigningConfig()
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "Coupler_Business-v${variant.versionName}.apk"
+                }
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'org.glassfish:javax.annotation:10.0-b28'
+
+    implementation 'com.github.joielechong:countrycodepicker:2.1.8'
+    //https://github.com/joielechong/CountryCodePicker
+    implementation 'com.chaos.view:pinview:1.4.2'
+    //https://github.com/ChaosLeong/PinView
+
+    implementation 'com.mikepenz:materialdrawer:6.1.2'
+    implementation 'com.github.Haegon:EasyNativeDialog-for-Android:0.3.0'
+    implementation 'com.github.skydoves:powermenu:2.0.6'
+    implementation 'androidx.core:core-ktx:1.2.0-alpha02'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.airbnb.android:lottie:2.7.0'
+    implementation 'com.github.mayuce:LottieAlertDialog:1.1'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-messaging:19.0.0'
+    implementation 'com.google.firebase:firebase-analytics:17.0.0'
+
+}
