@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gliesereum.couplerbusiness.R;
 import com.gliesereum.couplerbusiness.data.json.corporation.CorporationResponse;
 import com.gliesereum.couplerbusiness.ui.BusinessActivity;
+import com.gliesereum.couplerbusiness.ui.EditCorporationActivity;
 import com.gliesereum.couplerbusiness.util.FastSave;
 import com.gliesereum.couplerbusiness.util.IconPowerMenuItem;
 import com.skydoves.powermenu.CustomPowerMenu;
@@ -134,6 +135,7 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
 
     private void editCorporation(String id) {
         Toast.makeText(context, "editCorporation", Toast.LENGTH_SHORT).show();
+        context.startActivity(new Intent(context, EditCorporationActivity.class));
     }
 
     public CorporationAdapter(Context context) {
