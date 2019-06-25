@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gliesereum.couplerbusiness.R;
@@ -23,8 +24,10 @@ public class IconMenuAdapter extends MenuBaseAdapter<IconPowerMenuItem> {
 
         IconPowerMenuItem item = (IconPowerMenuItem) getItem(index);
         TextView titlteTextView = view.findViewById(R.id.titlteTextView);
+        ImageView iconImg = view.findViewById(R.id.iconImg);
 
         titlteTextView.setText(item.getTitle());
+        iconImg.setImageResource(item.getIc_logo());
 
         return super.getView(index, view, viewGroup);
     }

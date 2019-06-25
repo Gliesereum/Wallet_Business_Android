@@ -16,10 +16,10 @@ import com.gliesereum.couplerbusiness.R;
 import com.gliesereum.couplerbusiness.data.json.corporation.CorporationResponse;
 import com.gliesereum.couplerbusiness.ui.BusinessActivity;
 import com.gliesereum.couplerbusiness.util.FastSave;
+import com.gliesereum.couplerbusiness.util.IconPowerMenuItem;
+import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.OnMenuItemClickListener;
-import com.skydoves.powermenu.PowerMenu;
-import com.skydoves.powermenu.PowerMenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
 
     private List<CorporationResponse> corporationList = new ArrayList<>();
     private Context context;
-    private PowerMenu powerMenu;
+    private CustomPowerMenu powerMenu;
     private String corporationStringId;
 
     @NonNull
@@ -98,13 +98,15 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
             switch (view.getId()) {
                 case R.id.moreBtn:
                     corporationStringId = (String) view.getTag();
-                    powerMenu = new PowerMenu.Builder(context)
-                            .addItem(new PowerMenuItem("Редактировать", R.drawable.ic_arrow_back_24dp))
-                            .addItem(new PowerMenuItem("Удалить", R.drawable.ic_arrow_back_24dp))
-                            .setAnimation(MenuAnimation.SHOWUP_TOP_LEFT)
+                    powerMenu = new CustomPowerMenu.Builder<>(context, new IconMenuAdapter())
+                            .addItem(new IconPowerMenuItem("Редактировать", corporationStringId, R.drawable.ic_mode_edit_24dp))
+                            .addItem(new IconPowerMenuItem("Удалить", corporationStringId, R.drawable.ic_delete_forever_24dp))
+                            .setOnMenuItemClickListener(onIconMenuItemClickListener)
+                            .setAnimation(MenuAnimation.SHOWUP_TOP_RIGHT)
                             .setMenuRadius(10f)
+                            .setAutoDismiss(true)
                             .setMenuShadow(10f)
-                            .setOnMenuItemClickListener(onMenuItemClickListener)
+                            .setWidth(800)
                             .build();
                     powerMenu.showAsDropDown(view);
                     break;
@@ -112,28 +114,19 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
         }
     }
 
-    private OnMenuItemClickListener<PowerMenuItem> onMenuItemClickListener = new OnMenuItemClickListener<PowerMenuItem>() {
+    private OnMenuItemClickListener<IconPowerMenuItem> onIconMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
         @Override
-        public void onItemClick(int position, PowerMenuItem item) {
-            Toast.makeText(context, corporationStringId, Toast.LENGTH_SHORT).show();
-            powerMenu.setSelectedPosition(position); // change selected item
-            powerMenu.dismiss();
+        public void onItemClick(int position, IconPowerMenuItem item) {
+            switch (position) {
+                case 0:
+                    editCorporation(item.getId());
+                    break;
+                case 1:
+                    deleteCorporation(item.getId());
+                    break;
+            }
         }
     };
-
-//    private OnMenuItemClickListener<IconPowerMenuItem> onIconMenuItemClickListener = new OnMenuItemClickListener<IconPowerMenuItem>() {
-//        @Override
-//        public void onItemClick(int position, IconPowerMenuItem item) {
-//            switch (position) {
-//                case 0:
-//                    editCorporation(item.getId());
-//                    break;
-//                case 1:
-//                    deleteCorporation(item.getId());
-//                    break;
-//            }
-//        }
-//    };
 
     private void deleteCorporation(String id) {
         Toast.makeText(context, "deleteCorporation", Toast.LENGTH_SHORT).show();

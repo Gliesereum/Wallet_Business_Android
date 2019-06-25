@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.CreateCorporationActivity"></activity>
+        <activity android:name=".ui.EditCorporationActivity"></activity>
+        <activity android:name=".ui.CreateCorporationActivity" />
         <activity android:name=".ui.BusinessActivity" />
         <activity
             android:name=".ui.RegisterActivity"
