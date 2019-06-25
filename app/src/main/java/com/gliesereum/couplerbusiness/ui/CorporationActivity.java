@@ -2,6 +2,7 @@ package com.gliesereum.couplerbusiness.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import static com.gliesereum.couplerbusiness.util.Constants.ACCESS_TOKEN;
+import static com.gliesereum.couplerbusiness.util.Constants.CORPORATION_OBJECT;
+import static com.gliesereum.couplerbusiness.util.Constants.REFRESH_CORPORATIION_LIST;
 
 public class CorporationActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,7 +72,7 @@ public class CorporationActivity extends AppCompatActivity implements View.OnCli
         corporationAdapter = new CorporationAdapter(CorporationActivity.this);
         recyclerView.setAdapter(corporationAdapter);
 
-        createCorporationBtn = findViewById(R.id.createCorporationBtn);
+        createCorporationBtn = findViewById(R.id.editCorporationBtn);
         createCorporationBtn.setOnClickListener(this);
     }
 
@@ -93,9 +96,19 @@ public class CorporationActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.createCorporationBtn:
+            case R.id.editCorporationBtn:
                 startActivity(new Intent(CorporationActivity.this, CreateCorporationActivity.class));
                 break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("TAG", "onResume: ");
+        if (FastSave.getInstance().getBoolean(REFRESH_CORPORATIION_LIST, false)) {
+            corporationAdapter.addItems(FastSave.getInstance().getObject(CORPORATION_OBJECT, CorporationResponse.class));
+            FastSave.getInstance().deleteValue(REFRESH_CORPORATIION_LIST);
         }
     }
 }

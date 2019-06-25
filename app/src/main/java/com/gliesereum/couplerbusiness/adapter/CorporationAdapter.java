@@ -65,6 +65,11 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
         notifyDataSetChanged();
     }
 
+    public void addItems(CorporationResponse businessCategory) {
+        corporationList.add(businessCategory);
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView nameCorporation;
         private TextView corporationId;

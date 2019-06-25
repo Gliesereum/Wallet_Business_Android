@@ -5,6 +5,7 @@ import com.gliesereum.couplerbusiness.data.json.business.BusinessResponse;
 import com.gliesereum.couplerbusiness.data.json.code.CodeResponse;
 import com.gliesereum.couplerbusiness.data.json.code.SigninBody;
 import com.gliesereum.couplerbusiness.data.json.corporation.CorporationResponse;
+import com.gliesereum.couplerbusiness.data.json.corporation.CreateCorporationBody;
 import com.gliesereum.couplerbusiness.data.json.notificatoin.NotificatoinBody;
 import com.gliesereum.couplerbusiness.data.json.notificatoin.RegistrationTokenDeleteResponse;
 import com.gliesereum.couplerbusiness.data.json.status.StatusResponse;
@@ -58,11 +59,16 @@ public interface APIInterface {
     @GET("account/v1/auth/check")
     Call<UserResponse> checkAccessToken(@Query("accessToken") String accessToken);
 
+
+    //CORPORATION
+    @GET("karma/v1/business/by-corporation-id")
+    Call<List<BusinessResponse>> getAllBusiness(@Header("Authorization") String accessToken, @Query("corporationId") String corporationId);
+
     @GET("account/v1/corporation/by-user")
     Call<List<CorporationResponse>> getAllCorporation(@Header("Authorization") String accessToken);
 
-    @GET("karma/v1/business/by-corporation-id")
-    Call<List<BusinessResponse>> getAllBusiness(@Header("Authorization") String accessToken, @Query("corporationId") String corporationId);
+    @POST("account/v1/corporation")
+    Call<CorporationResponse> createCorporation(@Header("Authorization") String accessToken, @Body CreateCorporationBody createCorporationBody);
 
 //    @Multipart
 //    @POST("file/v1/upload")
