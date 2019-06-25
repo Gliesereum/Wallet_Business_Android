@@ -4,6 +4,7 @@ package com.gliesereum.couplerbusiness.data.network;
 import com.gliesereum.couplerbusiness.data.json.business.BusinessResponse;
 import com.gliesereum.couplerbusiness.data.json.code.CodeResponse;
 import com.gliesereum.couplerbusiness.data.json.code.SigninBody;
+import com.gliesereum.couplerbusiness.data.json.corporation.CorporationDeleteResponse;
 import com.gliesereum.couplerbusiness.data.json.corporation.CorporationResponse;
 import com.gliesereum.couplerbusiness.data.json.corporation.CreateCorporationBody;
 import com.gliesereum.couplerbusiness.data.json.notificatoin.NotificatoinBody;
@@ -21,6 +22,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface APIInterface {
@@ -69,6 +71,12 @@ public interface APIInterface {
 
     @POST("account/v1/corporation")
     Call<CorporationResponse> createCorporation(@Header("Authorization") String accessToken, @Body CreateCorporationBody createCorporationBody);
+
+    @PUT("account/v1/corporation")
+    Call<CorporationResponse> updateCorporation(@Header("Authorization") String accessToken, @Body CorporationResponse corporationResponse);
+
+    @DELETE("account/v1/corporation/{id}")
+    Call<CorporationDeleteResponse> deleteCorporation(@Header("Authorization") String accessToken, @Path("id") String id);
 
 //    @Multipart
 //    @POST("file/v1/upload")

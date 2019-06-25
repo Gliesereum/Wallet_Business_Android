@@ -27,7 +27,9 @@ import retrofit2.Response;
 
 import static com.gliesereum.couplerbusiness.util.Constants.ACCESS_TOKEN;
 import static com.gliesereum.couplerbusiness.util.Constants.CORPORATION_OBJECT;
+import static com.gliesereum.couplerbusiness.util.Constants.DELETE_CORPORATIION_LIST;
 import static com.gliesereum.couplerbusiness.util.Constants.REFRESH_CORPORATIION_LIST;
+import static com.gliesereum.couplerbusiness.util.Constants.UPDATE_CORPORATIION_LIST;
 
 public class CorporationActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -52,6 +54,9 @@ public class CorporationActivity extends AppCompatActivity implements View.OnCli
 
     private void initData() {
         FastSave.init(getApplicationContext());
+        FastSave.getInstance().deleteValue(REFRESH_CORPORATIION_LIST);
+        FastSave.getInstance().deleteValue(UPDATE_CORPORATIION_LIST);
+        FastSave.getInstance().deleteValue(DELETE_CORPORATIION_LIST);
         API = APIClient.getClient().create(APIInterface.class);
         customCallback = new CustomCallback(this, this);
     }
@@ -69,7 +74,7 @@ public class CorporationActivity extends AppCompatActivity implements View.OnCli
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        corporationAdapter = new CorporationAdapter(CorporationActivity.this);
+        corporationAdapter = new CorporationAdapter(this, this);
         recyclerView.setAdapter(corporationAdapter);
 
         createCorporationBtn = findViewById(R.id.editCorporationBtn);
@@ -110,5 +115,17 @@ public class CorporationActivity extends AppCompatActivity implements View.OnCli
             corporationAdapter.addItems(FastSave.getInstance().getObject(CORPORATION_OBJECT, CorporationResponse.class));
             FastSave.getInstance().deleteValue(REFRESH_CORPORATIION_LIST);
         }
+        if (FastSave.getInstance().getBoolean(UPDATE_CORPORATIION_LIST, false)) {
+            corporationAdapter.replaceItems(FastSave.getInstance().getObject(CORPORATION_OBJECT, CorporationResponse.class));
+            FastSave.getInstance().deleteValue(UPDATE_CORPORATIION_LIST);
+        }
+        if (FastSave.getInstance().getBoolean(DELETE_CORPORATIION_LIST, false)) {
+            corporationAdapter.deleteItems(FastSave.getInstance().getObject(CORPORATION_OBJECT, CorporationResponse.class));
+            FastSave.getInstance().deleteValue(DELETE_CORPORATIION_LIST);
+        }
+    }
+
+    public CorporationAdapter getCorporationAdapter() {
+        return corporationAdapter;
     }
 }

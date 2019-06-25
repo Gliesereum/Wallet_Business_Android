@@ -11,13 +11,13 @@ import javax.annotation.Generated;
 public class CorporationResponse {
 
     @SerializedName("businessActivity")
-    private Object businessActivity;
+    private String businessActivity;
 
     @SerializedName("country")
     private String country;
 
     @SerializedName("placeIncorporation")
-    private Object placeIncorporation;
+    private String placeIncorporation;
 
     @SerializedName("objectState")
     private String objectState;
@@ -26,13 +26,13 @@ public class CorporationResponse {
     private String city;
 
     @SerializedName("companyType")
-    private Object companyType;
+    private String companyType;
 
     @SerializedName("corporationEmployees")
-    private List<Object> corporationEmployees;
+    private List<String> corporationEmployees;
 
     @SerializedName("officeNumber")
-    private Object officeNumber;
+    private String officeNumber;
 
     @SerializedName("corporationSharedOwnerships")
     private List<CorporationSharedOwnershipsItem> corporationSharedOwnerships;
@@ -44,22 +44,22 @@ public class CorporationResponse {
     private String index;
 
     @SerializedName("logoUrl")
-    private Object logoUrl;
+    private String logoUrl;
 
     @SerializedName("kycApproved")
     private boolean kycApproved;
 
     @SerializedName("coverUrl")
-    private Object coverUrl;
+    private String coverUrl;
 
     @SerializedName("phone")
-    private Object phone;
+    private String phone;
 
     @SerializedName("street")
-    private Object street;
+    private String street;
 
     @SerializedName("rcNumber")
-    private Object rcNumber;
+    private String rcNumber;
 
     @SerializedName("name")
     private String name;
@@ -71,185 +71,185 @@ public class CorporationResponse {
     private String id;
 
     @SerializedName("dateIncorporation")
-    private Object dateIncorporation;
+    private String dateIncorporation;
 
     @SerializedName("region")
-    private Object region;
+    private String region;
 
-    public void setBusinessActivity(Object businessActivity) {
-        this.businessActivity = businessActivity;
-    }
-
-    public Object getBusinessActivity() {
+    public String getBusinessActivity() {
         return businessActivity;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setBusinessActivity(String businessActivity) {
+        this.businessActivity = businessActivity;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setPlaceIncorporation(Object placeIncorporation) {
-        this.placeIncorporation = placeIncorporation;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public Object getPlaceIncorporation() {
+    public String getPlaceIncorporation() {
         return placeIncorporation;
     }
 
-    public void setObjectState(String objectState) {
-        this.objectState = objectState;
+    public void setPlaceIncorporation(String placeIncorporation) {
+        this.placeIncorporation = placeIncorporation;
     }
 
     public String getObjectState() {
         return objectState;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setObjectState(String objectState) {
+        this.objectState = objectState;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCompanyType(Object companyType) {
-        this.companyType = companyType;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public Object getCompanyType() {
+    public String getCompanyType() {
         return companyType;
     }
 
-    public void setCorporationEmployees(List<Object> corporationEmployees) {
-        this.corporationEmployees = corporationEmployees;
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
     }
 
-    public List<Object> getCorporationEmployees() {
+    public List<String> getCorporationEmployees() {
         return corporationEmployees;
     }
 
-    public void setOfficeNumber(Object officeNumber) {
-        this.officeNumber = officeNumber;
+    public void setCorporationEmployees(List<String> corporationEmployees) {
+        this.corporationEmployees = corporationEmployees;
     }
 
-    public Object getOfficeNumber() {
+    public String getOfficeNumber() {
         return officeNumber;
     }
 
-    public void setCorporationSharedOwnerships(List<CorporationSharedOwnershipsItem> corporationSharedOwnerships) {
-        this.corporationSharedOwnerships = corporationSharedOwnerships;
+    public void setOfficeNumber(String officeNumber) {
+        this.officeNumber = officeNumber;
     }
 
     public List<CorporationSharedOwnershipsItem> getCorporationSharedOwnerships() {
         return corporationSharedOwnerships;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCorporationSharedOwnerships(List<CorporationSharedOwnershipsItem> corporationSharedOwnerships) {
+        this.corporationSharedOwnerships = corporationSharedOwnerships;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getIndex() {
         return index;
     }
 
-    public void setLogoUrl(Object logoUrl) {
-        this.logoUrl = logoUrl;
+    public void setIndex(String index) {
+        this.index = index;
     }
 
-    public Object getLogoUrl() {
+    public String getLogoUrl() {
         return logoUrl;
     }
 
-    public void setKycApproved(boolean kycApproved) {
-        this.kycApproved = kycApproved;
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 
     public boolean isKycApproved() {
         return kycApproved;
     }
 
-    public void setCoverUrl(Object coverUrl) {
-        this.coverUrl = coverUrl;
+    public void setKycApproved(boolean kycApproved) {
+        this.kycApproved = kycApproved;
     }
 
-    public Object getCoverUrl() {
+    public String getCoverUrl() {
         return coverUrl;
     }
 
-    public void setPhone(Object phone) {
-        this.phone = phone;
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
-    public Object getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setStreet(Object street) {
-        this.street = street;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Object getStreet() {
+    public String getStreet() {
         return street;
     }
 
-    public void setRcNumber(Object rcNumber) {
-        this.rcNumber = rcNumber;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public Object getRcNumber() {
+    public String getRcNumber() {
         return rcNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRcNumber(String rcNumber) {
+        this.rcNumber = rcNumber;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setBuildingNumber(String buildingNumber) {
-        this.buildingNumber = buildingNumber;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBuildingNumber() {
         return buildingNumber;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBuildingNumber(String buildingNumber) {
+        this.buildingNumber = buildingNumber;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setDateIncorporation(Object dateIncorporation) {
-        this.dateIncorporation = dateIncorporation;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Object getDateIncorporation() {
+    public String getDateIncorporation() {
         return dateIncorporation;
     }
 
-    public void setRegion(Object region) {
-        this.region = region;
+    public void setDateIncorporation(String dateIncorporation) {
+        this.dateIncorporation = dateIncorporation;
     }
 
-    public Object getRegion() {
+    public String getRegion() {
         return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     @Override

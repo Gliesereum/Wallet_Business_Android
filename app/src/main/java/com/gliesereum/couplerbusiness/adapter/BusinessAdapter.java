@@ -69,11 +69,6 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.ViewHo
             } else {
                 nameCorporation.setText("");
             }
-            if (businessResponse.getAddress() != null) {
-                addressCorporation.setText(businessResponse.getAddress());
-            } else {
-                addressCorporation.setText("");
-            }
             if (businessResponse.getId() != null) {
                 corporationId.setText(businessResponse.getId());
             } else {

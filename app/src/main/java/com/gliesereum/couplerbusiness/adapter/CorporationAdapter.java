@@ -13,18 +13,32 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gliesereum.couplerbusiness.R;
+import com.gliesereum.couplerbusiness.data.json.corporation.CorporationDeleteResponse;
 import com.gliesereum.couplerbusiness.data.json.corporation.CorporationResponse;
+import com.gliesereum.couplerbusiness.data.network.APIClient;
+import com.gliesereum.couplerbusiness.data.network.APIInterface;
+import com.gliesereum.couplerbusiness.data.network.CustomCallback;
 import com.gliesereum.couplerbusiness.ui.BusinessActivity;
+import com.gliesereum.couplerbusiness.ui.CorporationActivity;
 import com.gliesereum.couplerbusiness.ui.EditCorporationActivity;
 import com.gliesereum.couplerbusiness.util.FastSave;
 import com.gliesereum.couplerbusiness.util.IconPowerMenuItem;
+import com.labters.lottiealertdialoglibrary.ClickListener;
+import com.labters.lottiealertdialoglibrary.DialogTypes;
+import com.labters.lottiealertdialoglibrary.LottieAlertDialog;
 import com.skydoves.powermenu.CustomPowerMenu;
 import com.skydoves.powermenu.MenuAnimation;
 import com.skydoves.powermenu.OnMenuItemClickListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
+import static com.gliesereum.couplerbusiness.util.Constants.ACCESS_TOKEN;
 import static com.gliesereum.couplerbusiness.util.Constants.CORPORATION_OBJECT;
 
 public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.ViewHolder> {
@@ -33,6 +47,11 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
     private Context context;
     private CustomPowerMenu powerMenu;
     private String corporationStringId;
+    private LottieAlertDialog alertDialog;
+    private APIInterface API;
+    private CustomCallback customCallback;
+    private CorporationActivity activity;
+
 
     @NonNull
     @Override
@@ -67,6 +86,18 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
 
     public void addItems(CorporationResponse businessCategory) {
         corporationList.add(businessCategory);
+        notifyDataSetChanged();
+    }
+
+    public void replaceItems(CorporationResponse businessCategory) {
+        int index = corporationList.indexOf(businessCategory);
+        corporationList.remove(index);
+        corporationList.add(index, businessCategory);
+        notifyDataSetChanged();
+    }
+
+    public void deleteItems(CorporationResponse businessCategory) {
+        corporationList.remove(businessCategory);
         notifyDataSetChanged();
     }
 
@@ -125,26 +156,67 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
         public void onItemClick(int position, IconPowerMenuItem item) {
             switch (position) {
                 case 0:
-                    editCorporation(item.getId());
+                    CorporationResponse corporationResponse = corporationList.get(corporationList.indexOf(new CorporationResponse(item.getId())));
+                    FastSave.getInstance().saveObject(CORPORATION_OBJECT, corporationResponse);
+                    context.startActivity(new Intent(context, EditCorporationActivity.class));
                     break;
                 case 1:
-                    deleteCorporation(item.getId());
+                    openDialog(item.getId());
                     break;
             }
         }
     };
 
+    private void openDialog(String id) {
+        alertDialog = new LottieAlertDialog.Builder(context, DialogTypes.TYPE_QUESTION)
+                .setTitle("Удаление компании")
+                .setDescription("Вы действительно хотите удалить компанию?\n(Эту операцию нельзя отменить)")
+                .setPositiveText("Да")
+                .setNegativeText("Нет")
+                .setPositiveButtonColor(context.getResources().getColor(R.color.accent))
+                .setPositiveListener(new ClickListener() {
+                    @Override
+                    public void onClick(@NotNull LottieAlertDialog lottieAlertDialog) {
+                        deleteCorporation(id);
+                        alertDialog.dismiss();
+                    }
+                })
+                .setNegativeListener(new ClickListener() {
+                    @Override
+                    public void onClick(@NotNull LottieAlertDialog lottieAlertDialog) {
+                        alertDialog.dismiss();
+                    }
+                })
+                .build();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+    }
+
     private void deleteCorporation(String id) {
-        Toast.makeText(context, "deleteCorporation", Toast.LENGTH_SHORT).show();
+        API.deleteCorporation(FastSave.getInstance().getString(ACCESS_TOKEN, ""), id)
+                .enqueue(customCallback.getResponseWithProgress(new CustomCallback.ResponseCallback<CorporationDeleteResponse>() {
+                    @Override
+                    public void onSuccessful(Call<CorporationDeleteResponse> call, Response<CorporationDeleteResponse> response) {
+                        Toast.makeText(context, "Компания удаленя", Toast.LENGTH_SHORT).show();
+                        activity.getCorporationAdapter().deleteItems(new CorporationResponse(id));
+//                        FastSave.getInstance().saveObject(CORPORATION_OBJECT, new CorporationResponse(id));
+//                        FastSave.getInstance().saveBoolean(DELETE_CORPORATIION_LIST, true);
+                    }
+
+                    @Override
+                    public void onEmpty(Call<CorporationDeleteResponse> call, Response<CorporationDeleteResponse> response) {
+
+                    }
+                }));
+
     }
 
-    private void editCorporation(String id) {
-        Toast.makeText(context, "editCorporation", Toast.LENGTH_SHORT).show();
-        context.startActivity(new Intent(context, EditCorporationActivity.class));
-    }
-
-    public CorporationAdapter(Context context) {
+    public CorporationAdapter(Context context, CorporationActivity activity) {
         this.context = context;
+        this.activity = activity;
+        FastSave.init(context);
+        API = APIClient.getClient().create(APIInterface.class);
+        customCallback = new CustomCallback(context, activity);
     }
 
     public CorporationAdapter(List<CorporationResponse> corporationList, Context context) {
