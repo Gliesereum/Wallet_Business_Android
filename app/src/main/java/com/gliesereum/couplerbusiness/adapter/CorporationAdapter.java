@@ -56,14 +56,11 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
     @NonNull
     @Override
     public CorporationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.corporation_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.corporation_item, parent, false);
         view.setOnClickListener(v -> {
             CorporationResponse corporationResponse = corporationList.get(corporationList.indexOf(new CorporationResponse(((TextView) v.findViewById(R.id.corporationId)).getText().toString())));
             FastSave.getInstance().saveObject(CORPORATION_OBJECT, corporationResponse);
             context.startActivity(new Intent(context, BusinessActivity.class));
-
-
         });
         return new CorporationAdapter.ViewHolder(view);
     }
@@ -98,7 +95,11 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
 
     public void deleteItems(CorporationResponse businessCategory) {
         corporationList.remove(businessCategory);
-        notifyDataSetChanged();
+        if (corporationList.isEmpty()) {
+            activity.showNoneLabel();
+        } else {
+            notifyDataSetChanged();
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -197,10 +198,8 @@ public class CorporationAdapter extends RecyclerView.Adapter<CorporationAdapter.
                 .enqueue(customCallback.getResponseWithProgress(new CustomCallback.ResponseCallback<CorporationDeleteResponse>() {
                     @Override
                     public void onSuccessful(Call<CorporationDeleteResponse> call, Response<CorporationDeleteResponse> response) {
-                        Toast.makeText(context, "Компания удаленя", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Компания удалена", Toast.LENGTH_SHORT).show();
                         activity.getCorporationAdapter().deleteItems(new CorporationResponse(id));
-//                        FastSave.getInstance().saveObject(CORPORATION_OBJECT, new CorporationResponse(id));
-//                        FastSave.getInstance().saveBoolean(DELETE_CORPORATIION_LIST, true);
                     }
 
                     @Override
